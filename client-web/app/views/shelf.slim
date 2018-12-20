@@ -1,0 +1,72 @@
+md-toolbar
+  .md-toolbar-tools
+    /md-button.md-icon-button aria-label="Menu"
+    /  md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_menu_48px.svg"
+    img.toolbar-img src="/images/wordmark_nav.png"
+    /h2
+    /  span Burton
+    span flex=""
+
+    md-button.md-icon-button aria-label="Upload New Book" ng-click="toggleNewBook()"
+      md-icon.teal md-svg-src="../bower_components/material-design-icons/action/svg/production/ic_book_48px.svg"
+    md-button.md-icon-button aria-label="Manage Reading Groups" ng-click="toggleGroups()"
+      md-icon.orange md-svg-src="../bower_components/material-design-icons/social/svg/production/ic_group_48px.svg"
+    md-button.md-icon-button aria-label="User Profile" ng-click="toggleProfile()"
+      img.menu-avatar md-menu-origin="" alt="{{user.email}}" ng-src="{{user.image}}"
+
+md-sidenav.md-sidenav-right.md-whiteframe-z2 md-component-id="profile"
+  md-toolbar.md-toolbar-tools.md-accent.blue
+    h1.md-toolbar-tools Profile
+    md-button.md-icon-button aria-label="Return to Book" ng-click="closeSidenav('profile')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+    md-list-item.md-3-line.md-long-text
+      img.side-menu-avatar md-menu-origin="" alt="{{user.email}}" ng-src="{{user.image}}"
+      .md-list-item-text
+        h3
+          | {{ user.name }}
+        h4
+          | {{ user.email }}
+    md-divider
+    md-list-item ng-click="signOut()"
+      md-icon md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_exit_to_app_48px.svg"
+      p Sign Out
+
+md-sidenav.md-sidenav-right.md-whiteframe-z2 md-component-id="newBook"
+  md-toolbar.md-toolbar-tools.md-accent.teal
+    h1.md-toolbar-tools Upload New Book
+    md-button.md-icon-button aria-label="Cancel" ng-click="closeSidenav('newBook')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+    form name="newBookForm"
+      md-input-container.md-block
+        input aria-label="Select ePub" accept="*" name="epub" ng-model="newBook.epub" ngf-max-size="" ngf-select="" required="" type="file"
+        md-button.md-primary
+          | Select ePub
+      md-input-container.md-block
+        label Title
+        input ng-model="newBook.title"
+      md-input-container.md-block
+        label Description
+        input ng-model="newBook.description"
+      md-input-container.md-block
+        md-button.md-primary ng-click="uploadNewBook()"  Upload
+
+
+md-sidenav.md-sidenav-right.md-whiteframe-z2 md-component-id="groups"
+  md-toolbar.md-toolbar-tools.md-accent.orange
+    h1.md-toolbar-tools Manage Groups
+    md-button.md-icon-button aria-label="Cancel" ng-click="closeSidenav('groups')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+
+
+.shelf
+  md-grid-list md-cols-gt-md="8" md-cols-md="6" md-cols-sm="2" md-gutter="10px" md-gutter-gt-sm="10px" md-row-height="2:2" md-row-height-gt-md="1:1"
+    md-grid-tile md-colspan="2" md-colspan-sm="1" md-rowspan="3" md-rowspan-sm="2" ng-repeat="book in books" ng-click="read(book.id)"
+      a href="#/read/{{book.id}}"
+        img.shelf-cover alt="{{book.title}}" ng-src="{{book.cover}}"
+      /md-grid-tile-footer
+      /  h3
+      /    | {{book.title}}
+

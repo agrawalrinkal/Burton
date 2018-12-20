@@ -1,0 +1,104 @@
+md-toolbar
+  .md-toolbar-tools
+    md-button.md-icon-button aria-label="Close Book" ng-href="/#/shelf"
+      md-icon.blue md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_chevron_left_48px.svg"
+    md-button.md-icon-button aria-label="Table of Contents" ng-click="toggleToc()" ng-hide="isOpenToc()"
+      md-icon.teal md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_toc_48px.svg"
+    h2
+      span
+        | {{ book.title }}
+    span flex=""
+    md-button.md-icon-button aria-label="Open Text Menu" ng-click="toggleText()"
+      md-icon.yellow md-svg-icon="../bower_components/material-design-icons/editor/svg/production/ic_format_color_text_48px.svg"
+    md-button.md-icon-button aria-label="Bookmarks" ng-click="toggleBookmarks()"
+      md-icon.orange md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_bookmark_border_48px.svg"
+    md-button.md-icon-button aria-label="Bookmarks" ng-click="toggleAnnotations()"
+      md-icon.purple md-svg-icon="../bower_components/material-design-icons/communication/svg/production/ic_chat_bubble_outline_48px.svg"
+
+md-sidenav.md-sidenav-left.md-whiteframe-z2 md-component-id="toc"
+  md-toolbar.md-toolbar-tools.md-accent.teal
+    h1.md-toolbar-tools Table of Contents
+    md-button.md-icon-button aria-label="Return to Book" ng-click="closeSidenav('toc')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+    md-list ng-repeat="chapter in chapters"
+      md-list-item.md-2-line ng-click="goToChap(chapter.href)"
+        h3
+          | {{ chapter.label }}
+      md-list-item.md-2-line ng-click="goToChap(item.href)" ng-repeat="item in chapter.subitems"
+        p
+          | {{ item.label }}
+      md-divider
+
+md-sidenav.md-sidenav-right.md-whiteframe-z2 md-component-id="text"
+  md-toolbar.md-toolbar-tools.md-accent.yellow
+    h1.md-toolbar-tools Text Options
+    md-button.md-icon-button aria-label="Return to Book" ng-click="closeSidenav('text')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+    md-subheader.md-no-sticky Size
+    md-list-item ng-click="enlargeText()"
+      md-icon md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_zoom_in_24px.svg"
+      p Enlarge Text
+    md-list-item ng-click="shrinkText()"
+      md-icon md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_zoom_out_24px.svg"
+      p Shrink Text
+    md-divider
+    md-subheader.md-no-sticky Font
+    md-list-item ng-click="changeFont('Arial, Helvetica, sans-serif')"
+      p.arial flex="" Arial
+    md-list-item ng-click="changeFont('Courier New, Courier, monospace')"
+      p.courier flex="" Courier
+    md-list-item ng-click="changeFont('Georgia, serif')"
+      p.georgia flex="" Georgia
+    md-list-item ng-click="changeFont('Palatino Linotype, Book Antiqua, Palatino, serif')"
+      p.palatino flex="" Palatino
+    md-list-item ng-click="changeFont('Times New Roman, Times, serif')"
+      p.times flex="" Times
+
+md-sidenav.md-sidenav-right.md-whiteframe-z2 md-component-id="bookmarks"
+  md-toolbar.md-toolbar-tools.md-accent.orange
+    h1.md-toolbar-tools Bookmarks
+    md-button.md-icon-button aria-label="Return to Book" ng-click="closeSidenav('bookmarks')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+    md-list-item ng-click="newBookmark()"
+      md-icon md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_bookmark_48px.svg"
+      p Add Bookmark
+    md-subheader.md-no-sticky My Bookmarks
+    md-list-item ng-repeat="bookmark in bookmarks" ng-click="goToBookmark('{{ bookmark.ref }}')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/action/svg/production/ic_bookmark_border_48px.svg"
+      p.side-menu-list
+        | {{ bookmark.snippet }}
+
+md-sidenav.md-sidenav-right.md-whiteframe-z2 md-component-id="annotations"
+  md-toolbar.md-toolbar-tools.md-accent.purple
+    h1.md-toolbar-tools Annotations
+    md-button.md-icon-button aria-label="Return to Book" ng-click="closeSidenav('annotations')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg"
+  md-content layout-padding=""
+    md-list-item ng-click="newAnnotation()"
+      md-icon md-svg-icon="../bower_components/material-design-icons/communication/svg/production/ic_chat_bubble_48px.svg"
+      p Add Annotation
+    md-subheader.md-no-sticky My Annotations
+    md-list-item ng-repeat="annotation in annotations" ng-click="goToBookmark('{{ annotation.ref }}')"
+      md-icon md-svg-icon="../bower_components/material-design-icons/communication/svg/production/ic_chat_bubble_outline_48px.svg"
+      p
+        | {{ annotation.snippet }}
+
+
+md-content flex=""
+  section.no-select layout="row" layout-align="center center" layout-wrap=""
+    #wrapper
+      #render
+
+
+.footer
+  .footer-inner
+    section layout="row" layout-align="center center" layout-sm="column" layout-wrap=""
+      md-button.md-icon-button aria-label="Prev" ng-click="prev()"
+        md-icon.green md-svg-icon="../bower_components/material-design-icons/image/svg/design/ic_navigate_before_48px.svg"
+      md-slider ng-disabled="true" aria-label="Scroll" flex="" max="144" min="0" ng-model="slider.position"
+      md-button.md-icon-button aria-label="Next" ng-click="next()"
+        md-icon.green md-svg-icon="../bower_components/material-design-icons/image/svg/design/ic_navigate_next_48px.svg"
+
