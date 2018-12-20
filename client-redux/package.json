@@ -1,0 +1,11 @@
+{
+  "name": "burton-react",
+  "description": "Burton React",
+  "main": "index.js",
+  "dependencies": {
+    "babelify": "^6.3.0",
+    "react": "^0.14.0-rc1",
+    "react-dom": "^0.14.0-rc1",
+    "jquery": "^2.0"
+  }
+}
